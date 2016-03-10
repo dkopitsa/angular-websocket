@@ -11,6 +11,8 @@
   var isArray    = angular.isArray;
   var forEach    = angular.forEach;
   var arraySlice = Array.prototype.slice;
+
+  var isBrowser=new Function("try {return this===window;}catch(e){ return false;}");
   // ie8 wat
   if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = function(elt /*, from*/) {
@@ -344,8 +346,7 @@
         throw new Error('Invalid url provided');
       }
 
-      // CommonJS
-      if (typeof exports === 'object' && require) {
+      if (!isBrowser()) {
         try {
           ws = require('ws');
           Socket = (ws.Client || ws.client || ws);
